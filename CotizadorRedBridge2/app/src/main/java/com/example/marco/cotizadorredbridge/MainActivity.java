@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         constraintLayout = findViewById(R.id.constraintlayout);
         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2500);
@@ -160,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            launchCotizadorActivity();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -222,6 +225,7 @@ public class MainActivity extends AppCompatActivity implements
         if (TextUtils.isEmpty(email)) {
             mEmailField.setError("Required.");
             valid = false;
+            Toast.makeText(this," Ingrese Email o Contraseña",Toast.LENGTH_SHORT).show();
         } else {
             mEmailField.setError(null);
         }
@@ -230,6 +234,7 @@ public class MainActivity extends AppCompatActivity implements
         if (TextUtils.isEmpty(password)) {
             mPasswordField.setError("Required.");
             valid = false;
+            Toast.makeText(this," Ingrese Email o Contraseña",Toast.LENGTH_SHORT).show();
         } else {
             mPasswordField.setError(null);
         }
@@ -248,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements
                     "Bienvenido de vuelta",
                     Toast.LENGTH_SHORT).show();
 
-            launchCotizadorActivity();
+           // launchCotizadorActivity();
            /* mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
                     user.getEmail(), user.isEmailVerified()));
             mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
@@ -273,8 +278,11 @@ public class MainActivity extends AppCompatActivity implements
         int i = v.getId();
         if (i == R.id.email_create_account_button) {
             createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+            Toast.makeText(this,"Registrando",Toast.LENGTH_LONG).show();
         } else if (i == R.id.email_sign_in_button) {
             signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+            String mensajeSigneando = "Verificando";
+            Toast.makeText(this,mensajeSigneando,Toast.LENGTH_SHORT).show();
         }
 
         /*else if (i == R.id.sign_out_button) {

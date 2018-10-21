@@ -10,13 +10,6 @@ public class HijoVo {
         this.años = años;
     }
 
-    public String getEdad() {
-        return edad;
-    }
-
-    public void setEdad(String edad) {
-        this.edad = edad;
-    }
 
     public int getAños() {
         return años;

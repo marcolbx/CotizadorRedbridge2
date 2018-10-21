@@ -16,6 +16,7 @@ public class CotizacionActivity extends AppCompatActivity {
     private TextView tv100000d1000;
     private TextView tv100000d2500;
     private TextView tvFecha;
+    private TextView tvconthijos;
 
     public int costoTarifa;
 
@@ -61,6 +62,8 @@ public class CotizacionActivity extends AppCompatActivity {
         String casilla1x3 = intent.getStringExtra(CotizadorActivity.EXTRA_100x1000);
         String casilla2x3 = intent.getStringExtra(CotizadorActivity.EXTRA_100x2500);
         String fecha = intent.getStringExtra(CotizadorActivity.EXTRA_FECHA);
+        String conthijos = intent.getStringExtra(CotizadorActivity.EXTRA_HIJOS);
+
         tv25000d1000 = findViewById(R.id.tv25x1000);
         tv25000d1000.setText(casilla1x1);
         tv25000d2500 = findViewById(R.id.tv25x2500);
@@ -75,6 +78,8 @@ public class CotizacionActivity extends AppCompatActivity {
         tv100000d2500.setText(casilla2x3);
         tvFecha = findViewById(R.id.tvfecha);
         tvFecha.setText(fecha);
+        tvconthijos = findViewById(R.id.tvconthijos);
+        tvconthijos.setText(conthijos);
 
 
     }

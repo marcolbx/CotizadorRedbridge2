@@ -20,10 +20,8 @@ import java.util.ArrayList;
 
 public class AdaptadorHijos extends RecyclerView.Adapter<AdaptadorHijos.ViewHolderHijos> {
 
-    private EditText etedad;
     private RecyclerView mRecyclerView;
     private Context mContext;
-    public static ArrayList<EditModel> editModelArrayList;
 
     ArrayList<HijoVo> listaHijos;
     private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -46,6 +44,7 @@ public class AdaptadorHijos extends RecyclerView.Adapter<AdaptadorHijos.ViewHold
 
     @NonNull
     @Override
+// Usually involves inflating a layout from XML and returning the holder
     public ViewHolderHijos onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_txtview,null,false);
         view.setOnClickListener(mOnClickListener);
@@ -53,21 +52,34 @@ public class AdaptadorHijos extends RecyclerView.Adapter<AdaptadorHijos.ViewHold
     }
 
     @Override
+    // Involves populating data into the item through holder
     public void onBindViewHolder(@NonNull final ViewHolderHijos holder, final int position) {
+        holder.setIsRecyclable(false);
 
-        //etedad = holder.añoset.findViewById(R.id.editText3);
+        if(listaHijos.get(position).getAños() == -1) {
+            holder.añoset.setText("");
+        }
+        if(listaHijos.get(position).getAños()!= -1)
+            holder.añoset.setText(Integer.toString(listaHijos.get(position).getAños()));
         holder.añoset.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                   if(holder.añoset.getText().toString().trim().length()>0)
+
+                   if(holder.añoset.getText().toString().trim().length()>0){
+                       int limite = Integer.parseInt(String.valueOf(holder.añoset.getText()));
+                       if(limite < 24)
                        listaHijos.get(position).setAños(Integer.parseInt(String.valueOf(holder.añoset.getText())));
-                   else
-                        listaHijos.get(position).setAños(0);
+                       else {
+                           listaHijos.get(position).setAños(-1);
+                       }
+                   }
+                   else {
+                       listaHijos.get(position).setAños(-1);
+                   }
 
             }
 
@@ -76,7 +88,6 @@ public class AdaptadorHijos extends RecyclerView.Adapter<AdaptadorHijos.ViewHold
 
             }
         });
-        //    holder.añoset.setText(editModelArrayList.get(position).getEditTextValue());
     }
 
     @Override
@@ -95,13 +106,7 @@ public class AdaptadorHijos extends RecyclerView.Adapter<AdaptadorHijos.ViewHold
             edadtv = (TextView) itemView.findViewById(R.id.textView9);
             añoset = itemView.findViewById(R.id.editText3);
 
-
-
-
         }
-
-
-
     }
 
 }
