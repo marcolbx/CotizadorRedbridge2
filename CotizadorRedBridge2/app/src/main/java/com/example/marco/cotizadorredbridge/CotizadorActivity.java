@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -196,7 +197,8 @@ public class CotizadorActivity extends AppCompatActivity {
 
         //CURRENT DATE
         currentTime = Calendar.getInstance().getTime();
-
+        Date currentTimeModified = new Date(currentTime.getTime());
+        currentTime = currentTimeModified;
         //DATE PICKER Poliza efectiva
         mDisplayDate = (TextView)findViewById(R.id.tvdate);
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
@@ -205,7 +207,8 @@ public class CotizadorActivity extends AppCompatActivity {
                 Calendar calendar = Calendar.getInstance();
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH) + 1;
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int day =1;
+                //calendar.get(Calendar.DAY_OF_MONTH);
                 //ESTOY QUITANDO LA INSTRUCCION DE ARRIBA
                 day = 1;
 
@@ -214,6 +217,7 @@ public class CotizadorActivity extends AppCompatActivity {
                         mDateSetListener,
                         year,month,day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.getDatePicker().setMinDate(currentTime.getTime());
                 dialog.show();
             }
         });
@@ -243,7 +247,8 @@ public class CotizadorActivity extends AppCompatActivity {
                         CotizadorActivity.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mTDateSetListener,
                         year,month,day);
-                dialog.getDatePicker().setMaxDate(currentTime.getTime());
+                dialog.getDatePicker().setMaxDate(calendar.getTime().getTime());
+
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -252,7 +257,7 @@ public class CotizadorActivity extends AppCompatActivity {
         mTDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-               month = month + 1;
+                month = month + 1;
                 Log.d(TAG,"onDateSet: " + year + "/" + month +"/" + dayOfMonth);
                 String date = month + "/" + dayOfMonth + "/" + year;
                 mTDisplayDate.setText(date);
@@ -326,10 +331,6 @@ public class CotizadorActivity extends AppCompatActivity {
         adapter = new AdaptadorHijos(listahijos,this);
         recyclerHijos.setAdapter(adapter);
         adapter.listaHijos = listahijos;
-        /* 1er Metodo
-        if(!adapter.listaHijos.isEmpty())
-        adapter.listaHijos.remove(adapter.listaHijos.get(adapter.listaHijos.size()-1));
-        adapter.notifyDataSetChanged();*/
     }
 
     public void borrarFecha(TextView textView){
@@ -338,13 +339,16 @@ public class CotizadorActivity extends AppCompatActivity {
 
     public void launchCotizacionActivity(){
         Intent intent = new Intent (this, CotizacionActivity.class);
+
+        DecimalFormat df2 = new DecimalFormat( "#,###,###,###.00" ); // Le puse numeral, probar luego con el 0
+
         String edad = agetitulartextview.getText().toString();
-        String casilla1x1 = Integer.toString(ca.totalPrimaMPlus25000x1000);
-        String casilla2x1 = Integer.toString(ca.totalPrimaMPlus25000x2500);
-        String casilla1x2 = Integer.toString(ca.totalPrimaMPlus50000x1000);
-        String casilla2x2 = Integer.toString(ca.totalPrimaMPlus50000x2500);
-        String casilla1x3 = Integer.toString(ca.totalPrimaMPlus100000x1000);
-        String casilla2x3 = Integer.toString(ca.totalPrimaMPlus100000x2500);
+        String casilla1x1 = df2.format(ca.totalPrimaMPlus25000x1000);
+        String casilla2x1 = df2.format(ca.totalPrimaMPlus25000x2500);
+        String casilla1x2 = df2.format(ca.totalPrimaMPlus50000x1000);
+        String casilla2x2 = df2.format(ca.totalPrimaMPlus50000x2500);
+        String casilla1x3 = df2.format(ca.totalPrimaMPlus100000x1000);
+        String casilla2x3 = df2.format(ca.totalPrimaMPlus100000x2500);
         String fecha = (String) mDisplayDate.getText();
         intent.putExtra(EXTRA_EDAD, edad);
         intent.putExtra(EXTRA_25x1000, casilla1x1);

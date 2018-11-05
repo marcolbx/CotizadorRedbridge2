@@ -77,11 +77,15 @@ public class MainActivity extends AppCompatActivity implements
 
 
         constraintLayout = findViewById(R.id.constraintlayout);
+
+        //Valida solo para versiones nuevas d android
+        /*
         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2500);
         animationDrawable.setExitFadeDuration(5000);
 
-        animationDrawable.start();
+        animationDrawable.start();*/
+
 
         // Views
      /*   mStatusTextView = findViewById(R.id.status);
@@ -92,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements
         // Buttons
         findViewById(R.id.email_sign_in_button).setOnClickListener(this);
         findViewById(R.id.email_create_account_button).setOnClickListener(this);
+        findViewById(R.id.about_button).setOnClickListener(this);
        // findViewById(R.id.sign_out_button).setOnClickListener(this);
         // findViewById(R.id.verify_email_button).setOnClickListener(this);
 
@@ -246,6 +251,11 @@ public class MainActivity extends AppCompatActivity implements
         startActivity(intent);
     }
 
+    public void launchAcercaDeActivity(){
+        Intent intent = new Intent(this,AcercaDeActivity.class);
+        startActivity(intent);
+    }
+
     private void updateUI(FirebaseUser user) {
         // hideProgressDialog();
         if (user != null) {
@@ -283,6 +293,9 @@ public class MainActivity extends AppCompatActivity implements
             signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
             String mensajeSigneando = "Verificando";
             Toast.makeText(this,mensajeSigneando,Toast.LENGTH_SHORT).show();
+        }
+        else if(i == R.id.about_button){
+            launchAcercaDeActivity();
         }
 
         /*else if (i == R.id.sign_out_button) {

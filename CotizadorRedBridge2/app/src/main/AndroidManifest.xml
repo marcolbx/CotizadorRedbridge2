@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CotizadorActivity" />
-        <activity android:name=".CotizacionActivity"></activity>
+        <activity android:name=".CotizacionActivity" />
+        <activity android:name=".AcercaDeActivity"></activity>
     </application>
 
 </manifest>
